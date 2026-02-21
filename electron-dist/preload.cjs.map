@@ -1,0 +1,1 @@
+{"version":3,"sources":["../electron/preload.ts"],"sourcesContent":["import { contextBridge, ipcRenderer } from \"electron\";\r\n\r\ncontextBridge.exposeInMainWorld(\"api\", {\r\n    ping: () => ipcRenderer.invoke(\"ping\"),\r\n});\r\n"],"mappings":";AAAA,sBAA2C;AAE3C,8BAAc,kBAAkB,OAAO;AAAA,EACnC,MAAM,MAAM,4BAAY,OAAO,MAAM;AACzC,CAAC;","names":[]}
