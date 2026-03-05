@@ -1,5 +1,5 @@
 const API_BASE =
-    import.meta.env.VITE_API_BASE_URL";
+    import.meta.env.VITE_API_BASE_URL ?? "https://margareta-babyish-lizeth.ngrok-free.dev";
 
 export async function apiFetch<T>(
     path: string,
@@ -7,9 +7,9 @@ export async function apiFetch<T>(
 ): Promise<T> {
     const isFormData = options.body instanceof FormData;
 
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
         ...(isFormData ? {} : { "Content-Type": "application/json" }),
-        ...(options.headers || {}),
+        ...(options.headers as Record<string, string> || {}),
     };
 
     if (import.meta.env.DEV) {

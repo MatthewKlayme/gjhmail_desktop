@@ -24,23 +24,24 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // electron/main.ts
 var import_electron = require("electron");
 var import_path = __toESM(require("path"), 1);
-var import_electron2 = require("electron");
-import_electron2.ipcMain.handle("ping", async () => {
-  return "pong from electron";
-});
+import_electron.ipcMain.handle("ping", async () => "pong from electron");
 var mainWindow = null;
 function createWindow() {
   mainWindow = new import_electron.BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      preload: import_path.default.join(__dirname, "preload.cjs")
+      preload: import_path.default.join(__dirname, "preload.cjs"),
+      contextIsolation: true
     }
   });
-  if (process.env.VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
+  const devUrl = process.env.VITE_DEV_SERVER_URL;
+  if (devUrl) {
+    mainWindow.loadURL(devUrl);
+    mainWindow.webContents.openDevTools({ mode: "detach" });
   } else {
-    mainWindow.loadFile(import_path.default.join(__dirname, "../dist/index.html"));
+    const indexHtml = import_path.default.join(process.resourcesPath, "renderer", "index.html");
+    mainWindow.loadFile(indexHtml);
   }
 }
 import_electron.app.whenReady().then(createWindow);

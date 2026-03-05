@@ -1,11 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
-import { ipcMain } from "electron";
 
-ipcMain.handle("ping", async () => {
-    return "pong from electron";
-});
-
+ipcMain.handle("ping", async () => "pong from electron");
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -15,16 +11,18 @@ function createWindow() {
         height: 800,
         webPreferences: {
             preload: path.join(__dirname, "preload.cjs"),
-
+            contextIsolation: true,
         },
     });
 
-    if (process.env.VITE_DEV_SERVER_URL) {
-        // Dev: load Vite server
-        mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
+    const devUrl = process.env.VITE_DEV_SERVER_URL;
+
+    if (devUrl) {
+        mainWindow.loadURL(devUrl);
+        mainWindow.webContents.openDevTools({ mode: "detach" });
     } else {
-        // Prod: load built files
-        mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
+        const indexHtml = path.join(process.resourcesPath, "renderer", "index.html");
+        mainWindow.loadFile(indexHtml);
     }
 }
 

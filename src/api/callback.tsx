@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 export function AuthCallback() {
     const navigate = useNavigate();
+
+    const API_BASE =
+        import.meta.env.VITE_API_BASE_URL ?? "https://margareta-babyish-lizeth.ngrok-free.dev";
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -21,7 +25,7 @@ export function AuthCallback() {
         sessionStorage.removeItem("oauth_state");
         sessionStorage.removeItem("oauth_provider");
 
-        fetch(`https://margareta-babyish-lizeth.ngrok-free.dev/auth/oauth/${provider}`, {
+        fetch(`${API_BASE}/auth/oauth/${provider}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
