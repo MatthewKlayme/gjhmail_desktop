@@ -1,4 +1,6 @@
 {
+  "description": "GJH Mail Desktop Client",
+  "author": "Matthew",
   "name": "gjhmail-desktop-app",
   "private": true,
   "version": "1.0.0",
