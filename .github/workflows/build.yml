@@ -29,6 +29,8 @@ jobs:
 
       - name: Build installer
         run: npm run dist -- --publish=never
+        env:
+          VITE_API_BASE_URL: https://gjhmail-1052023244032.us-central1.run.app
 
       - name: Upload release
         uses: softprops/action-gh-release@v2
