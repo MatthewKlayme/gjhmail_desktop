@@ -23,6 +23,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 
 // electron/main.ts
 var import_electron = require("electron");
+var import_electron_updater = require("electron-updater");
 var import_path = __toESM(require("path"), 1);
 import_electron.ipcMain.handle("ping", async () => "pong from electron");
 var mainWindow = null;
@@ -44,7 +45,22 @@ function createWindow() {
     mainWindow.loadFile(indexHtml);
   }
 }
-import_electron.app.whenReady().then(createWindow);
+import_electron.app.whenReady().then(() => {
+  createWindow();
+  if (import_electron.app.isPackaged) {
+    import_electron_updater.autoUpdater.checkForUpdates();
+    import_electron_updater.autoUpdater.on("update-available", () => {
+      console.log("Update available");
+    });
+    import_electron_updater.autoUpdater.on("update-downloaded", () => {
+      console.log("Update downloaded, installing...");
+      import_electron_updater.autoUpdater.quitAndInstall();
+    });
+    import_electron_updater.autoUpdater.on("error", (err) => {
+      console.error("Updater error:", err);
+    });
+  }
+});
 import_electron.app.on("window-all-closed", () => {
   if (process.platform !== "darwin") import_electron.app.quit();
 });

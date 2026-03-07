@@ -128,7 +128,7 @@ export const Login = () => {
                     <p style={{ color: "red" }
                     }>❌ {error} </p>
                 ) : (
-                    <p>Backend status: {status} </p>
+                    <p style={{ display: "flex", alignItems: "center" }}>Backend status: <p style={{ color: "greenyellow", marginLeft: "5px" }}> {status}</p> </p>
                 )}
             <button onClick={loginWithGoogle}>
                 Sign in with Google
