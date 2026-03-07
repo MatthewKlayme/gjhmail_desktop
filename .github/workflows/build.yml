@@ -28,7 +28,7 @@ jobs:
         run: npm run build:electron
 
       - name: Build installer
-        run: npm run dist
+        run: npm run dist -- --publish=always
         env:
           VITE_API_BASE_URL: https://gjhmail-1052023244032.us-central1.run.app
           VITE_MICROSOFT_CLIENT_ID: 84d5ddf4-b45f-4171-8401-5407371c03d8
