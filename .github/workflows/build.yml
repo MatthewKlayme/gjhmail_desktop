@@ -32,6 +32,7 @@ jobs:
         env:
           VITE_API_BASE_URL: https://gjhmail-1052023244032.us-central1.run.app
           VITE_MICROSOFT_CLIENT_ID: 84d5ddf4-b45f-4171-8401-5407371c03d8
+          VITE_GOOGLE_CLIENT_ID: 1052023244032-6jvgsa5athfjqqqqukofq8rlt56mlvjd.apps.googleusercontent.com
 
       - name: Upload release
         uses: softprops/action-gh-release@v2
