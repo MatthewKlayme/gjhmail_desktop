@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from "electron";
+import { autoUpdater } from "electron-updater";
 import path from "path";
 
 ipcMain.handle("ping", async () => "pong from electron");
@@ -26,7 +27,26 @@ function createWindow() {
     }
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    createWindow();
+
+    if (app.isPackaged) {
+        autoUpdater.checkForUpdates();
+
+        autoUpdater.on("update-available", () => {
+            console.log("Update available");
+        });
+
+        autoUpdater.on("update-downloaded", () => {
+            console.log("Update downloaded, installing...");
+            autoUpdater.quitAndInstall();
+        });
+
+        autoUpdater.on("error", (err) => {
+            console.error("Updater error:", err);
+        });
+    }
+});
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();

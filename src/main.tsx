@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast'
 const Router = window.location.protocol === 'file:' ? HashRouter : BrowserRouter
 
 createRoot(document.getElementById('root')!).render(
+
   <StrictMode>
     <Router>
       <Toaster position="bottom-right" reverseOrder={false} />
