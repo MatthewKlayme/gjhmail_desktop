@@ -1,35 +1,33 @@
 name: Build Desktop App
 
 on:
-push:
-tags:
-- "v*"
+  push:
+    tags:
+      - "v*"
 
 jobs:
-build:
-runs-on: windows-latest
+  build:
+    runs-on: windows-latest
 
-# ```
-# steps:
-#   - name: Checkout repo
-#     uses: actions/checkout@v4
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-#   - name: Setup Node
-#     uses: actions/setup-node@v4
-#     with:
-#       node-version: 20
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-#   - name: Install dependencies
-#     run: npm install
+      - name: Install dependencies
+        run: npm install
 
-#   - name: Build Electron
-#     run: npm run build:electron
+      - name: Build Electron
+        run: npm run build:electron
 
-#   - name: Build installer
-#     run: npm run dist
+      - name: Build installer
+        run: npm run dist
 
-#   - name: Upload release
-#     uses: softprops/action-gh-release@v2
-#     with:
-#       files: dist/*.exe
-# ```
+      - name: Upload release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.exe
